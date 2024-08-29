@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using WebApplication2.Data;
 using WebApplication2.Models;
 using WebApplication2.Models.Entities;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WebApplication2.Controllers
 {
@@ -30,6 +31,12 @@ namespace WebApplication2.Controllers
                 Email = viewModel.Email,
                 Phone = viewModel.Phone,
                 Subscribed = viewModel.Subscribed,
+                Date = viewModel.Date,
+                Capacity = viewModel.Capacity,
+                Visiting_Hour = viewModel.Visiting_Hour,
+                Price = viewModel.Price,
+                Description = viewModel.Description,
+                Location = viewModel.Location
             };
             await dbContext.Students.AddAsync(student);
             await dbContext.SaveChangesAsync();
@@ -62,7 +69,12 @@ namespace WebApplication2.Controllers
                 student.Email = ViewModel.Email;
                 student.Phone = ViewModel.Phone;
                 student.Subscribed = ViewModel.Subscribed;
-
+                student.Date = ViewModel.Date;
+                student.Capacity = ViewModel.Capacity;
+                student.Visiting_Hour = ViewModel.Visiting_Hour;
+                student.Price = ViewModel.Price;
+                student.Description = ViewModel.Description;
+                student.Location = ViewModel.Location;
                 await dbContext.SaveChangesAsync();
 
 
@@ -113,23 +125,22 @@ namespace WebApplication2.Controllers
             }
             else
             {
-                // If a search string is provided, filter the students based on the search criteria
+                
                 students = await dbContext.Students
                     .Where(s => s.Name.Contains(searchString) || s.Email.Contains(searchString))
                     .ToListAsync();
 
-                // If no students match the search criteria, set a warning message
+              
                 if (students.Count == 0)
                 {
                     TempData["warning"] = "No students found matching your search criteria.";
                 }
             }
 
-            // Pass the search string to the view so it can be retained in the search box
             ViewData["searchString"] = searchString;
 
             // Return the filtered list to the view
-            return View("List", students); // Assuming the view name is "List"
+            return View("List", students); 
         }
 
 
