@@ -86,7 +86,7 @@ namespace WebApplication2.Controllers
         public async Task<IActionResult> Delete(Student ViewModel)
         {
             var student = await dbContext.Students.FindAsync(ViewModel.Id);
-            if (student != null)
+            if (@student!= null)
             {
                 dbContext.Students.Remove(student);
                 await dbContext.SaveChangesAsync(true);
